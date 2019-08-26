@@ -1,5 +1,5 @@
 class Player:
-    VERSION = "1.3"
+    VERSION = "1.4"
 
     test_state = {"tournament_id": "550d1d68cd7bd10003000003",
 
@@ -93,6 +93,7 @@ class Player:
     def betRequest(self, game_state=test_state):
 
         players = game_state["players"]
+        actual_round = game_state["round"]
 
         my_cards = {}
         for player in players:
@@ -106,14 +107,28 @@ class Player:
         my_ranks = []
         for card in my_cards:
             my_ranks.append(card["rank"])
-        if my_ranks[0] == my_ranks[1]:
-            if my_ranks[0] in community_ranks:
-                return game_state["minimum_raise"] * 3
-            return game_state["minimum_raise"] * 1.5
-        elif my_ranks[0] in community_ranks or my_ranks[1] in community_ranks:
-            return game_state["minimum_raise"] * 1.5
-        return game_state["minimum_raise"]
+
+        if actual_round == 0:
+            if my_ranks[0] == my_ranks[1]:
+                return game_state["minimum_raise"] * 1.5
+
+        if actual_round < 3:
+            if my_ranks[0] == my_ranks[1]:
+                if my_ranks[0] in community_ranks:
+                    return game_state["minimum_raise"] * 3
+                return game_state["minimum_raise"] * 1.5
+            elif my_ranks[0] in community_ranks or my_ranks[1] in community_ranks:
+                return game_state["minimum_raise"] * 1.5
+            else:
+                return game_state["minimum_raise"]
+
+        return 0
+
 
     def showdown(self, game_state):
         pass
+
+
+
+
 
