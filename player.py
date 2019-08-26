@@ -1,5 +1,5 @@
 class Player:
-    VERSION = "1.18"
+    VERSION = "1.19"
 
     from itertools import groupby
 
@@ -10,7 +10,7 @@ class Player:
         actual_round = int(game_state["bet_index"])
         my_id = int(game_state["in_action"])
 
-        my_cards = {}
+        my_cards = []
         for player in players:
             if player["name"] == "SteamBot":
                 my_cards = player["hole_cards"]
@@ -76,16 +76,17 @@ class Player:
         return False
 
     def all_cards(self, my_hand, community_cards, what="all"):
+        all_cards = my_hand + community_cards
         if what == "all":
-            return {**my_hand, **community_cards}
+            return all_cards
         elif what == "rank":
             ranks = []
-            for card in {**my_hand, **community_cards}:
+            for card in all_cards:
                 ranks.append(card['rank'])
             return ranks
         elif what == "suits":
             suits = []
-            for card in {**my_hand, **community_cards}:
+            for card in all_cards:
                 suits.append(card['suit'])
             return suits
 
