@@ -1,5 +1,5 @@
 class Player:
-    VERSION = "1.20"
+    VERSION = "1.21"
 
     from itertools import groupby
 
@@ -33,14 +33,19 @@ class Player:
                 elif self.check_for_flush(my_cards, game_state["community_cards"]):
                     return int(game_state["players"][my_id]["stack"])
                 elif self.check_for_two_pair(my_ranks, community_ranks):
-                    return int(game_state["current_buy_in"]) + int(game_state["minimum_raise"]) * 4
+
+                    return game_state["players"][my_id]["stack"] / 2 if int(game_state["current_buy_in"]) + int(game_state["minimum_raise"]) >= game_state["players"][my_id]["stack"] else game_state["players"][my_id]["stack"] / 3
+
                 elif self.check_for_pair(my_ranks, community_ranks):
-                    return int(game_state["current_buy_in"]) + int(game_state["minimum_raise"]) * 2
+                    return game_state["players"][my_id]["stack"] / 3 if int(game_state["current_buy_in"]) + int(game_state["minimum_raise"]) >= game_state["players"][my_id]["stack"] else game_state["players"][my_id]["stack"] / 4
                 else:
                     return int(game_state["current_buy_in"]) + int(game_state["minimum_raise"])
         else:
             if my_ranks[0] == my_ranks[1]:
-                return int(game_state["current_buy_in"]) + int(game_state["minimum_raise"]) * 2
+                return game_state["players"][my_id]["stack"] / 3 if int(game_state["current_buy_in"]) + int(
+                    game_state["minimum_raise"]) >= game_state["players"][my_id]["stack"] else \
+                game_state["players"][my_id]["stack"] / 4
+
             else:
                 return int(game_state["current_buy_in"]) + int(game_state["minimum_raise"])
         return 0
