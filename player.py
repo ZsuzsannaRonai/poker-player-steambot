@@ -128,7 +128,6 @@ class Player:
         else:
             return False
 
-
     def showdown(self, game_state):
         pass
 
