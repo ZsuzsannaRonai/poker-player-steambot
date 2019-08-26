@@ -11,7 +11,10 @@ class Player:
             if player["name"] == "SteamBot":
                 my_cards = player["hole_cards"]
 
-        community_cards = {}
+        community_cards = []
+
+        for card in game_state["community_cards"]:
+            community_cards.append(card["rank"])
 
 
         my_ranks = []
