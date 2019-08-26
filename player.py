@@ -1,5 +1,5 @@
 class Player:
-    VERSION = "1.22"
+    VERSION = "1.23"
 
     from itertools import groupby
 
@@ -25,7 +25,7 @@ class Player:
         print("Hello LeanPoker")
 
         if len(community_ranks) != 0:
-            if len(community_ranks) < 5:
+            if len(community_ranks) <= 5:
                 if self.check_for_poker(my_cards, game_state["community_cards"]):
                     return int(game_state["players"][my_id]["stack"])
                 elif self.check_for_full_house(my_cards, game_state["community_cards"]):
