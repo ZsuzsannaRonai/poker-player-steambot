@@ -127,6 +127,20 @@ class Player:
                     return True
         return False
 
+    def check_for_two_pair(self, my_ranks, community_ranks):
+        # return a boolean if there is two pair between hand and community cards
+        pairs = {}
+        for my_rank in my_ranks:
+            for com_rank in community_ranks:
+                if my_rank == com_rank:
+                    if pairs['first']:
+                        pairs['second'] = True
+                    else:
+                        pairs['first'] = True
+                if pairs['first'] and pairs['second']:
+                    return True
+        return False
+
     def showdown(self, game_state):
         pass
 
