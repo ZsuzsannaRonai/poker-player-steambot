@@ -1,5 +1,5 @@
 class Player:
-    VERSION = "1.7"
+    VERSION = "1.8"
 
 
     def betRequest(self, game_state):
@@ -22,16 +22,16 @@ class Player:
 
         if actual_round == 0:
             if my_ranks[0] == my_ranks[1]:
-                return game_state["minimum_raise"] * 1.5
+                return int(game_state["minimum_raise"]) * 1.5
             return game_state["minimum_raise"]
 
         if actual_round < 3:
             if my_ranks[0] == my_ranks[1]:
                 if my_ranks[0] in community_ranks:
-                    return game_state["minimum_raise"] * 3
-                return game_state["minimum_raise"] * 1.5
+                    return int(game_state["minimum_raise"]) * 3
+                return int(game_state["minimum_raise"])* 1.5
             elif my_ranks[0] in community_ranks or my_ranks[1] in community_ranks:
-                return game_state["minimum_raise"] * 1.5
+                return int(game_state["minimum_raise"]) * 1.5
             else:
                 return game_state["minimum_raise"]
 
