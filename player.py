@@ -1,5 +1,5 @@
 class Player:
-    VERSION = "1.1"
+    VERSION = "1.2"
 
     test_state = {"tournament_id": "550d1d68cd7bd10003000003",
 
@@ -107,9 +107,11 @@ class Player:
         for card in my_cards:
             my_ranks.append(card["rank"])
         if my_ranks[0] == my_ranks[1]:
+            if my_ranks[0] in community_ranks:
+                return game_state["minimum_raise"] * 3
             return game_state["minimum_raise"]
-
         return 0
 
     def showdown(self, game_state):
         pass
+
