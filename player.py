@@ -1,5 +1,5 @@
 class Player:
-    VERSION = "1.14"
+    VERSION = "1.15"
 
 
 
@@ -7,6 +7,7 @@ class Player:
 
         players = game_state["players"]
         actual_round = int(game_state["bet_index"])
+        my_id = int(game_state["in_action"])
 
         my_cards = {}
         for player in players:
@@ -34,7 +35,7 @@ class Player:
                 return int(game_state["current_buy_in"]) + int(game_state["minimum_raise"]) * 4
             else:
                 print(int(game_state["current_buy_in"]) - int(game_state["players"]["in_action"]["bet"]) + int(game_state["minimum_raise"]))
-                return int(game_state["current_buy_in"]) - int(game_state["players"]["in_action"]["bet"]) + int(game_state["minimum_raise"])
+                return int(game_state["current_buy_in"]) - int(game_state["players"][my_id]["bet"]) + int(game_state["minimum_raise"])
         return 0
 
 
