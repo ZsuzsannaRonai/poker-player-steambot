@@ -5,7 +5,7 @@ class Player:
     def betRequest(self, game_state):
 
         players = game_state["players"]
-        actual_round = int(game_state["round"])
+        actual_round = int(game_state["bet_index"])
 
         my_cards = {}
         for player in players:
