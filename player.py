@@ -1,5 +1,5 @@
 class Player:
-    VERSION = "1.13"
+    VERSION = "1.14"
 
 
 
@@ -33,6 +33,7 @@ class Player:
             if my_ranks[0] == my_ranks[1]:
                 return int(game_state["current_buy_in"]) + int(game_state["minimum_raise"]) * 4
             else:
+                print(int(game_state["current_buy_in"]) - int(game_state["players"]["in_action"]["bet"]) + int(game_state["minimum_raise"]))
                 return int(game_state["current_buy_in"]) - int(game_state["players"]["in_action"]["bet"]) + int(game_state["minimum_raise"])
         return 0
 
