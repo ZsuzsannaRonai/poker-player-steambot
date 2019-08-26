@@ -1,4 +1,5 @@
 class Player:
+    VERSION = "1.6"
 
     from itertools import groupby
 
@@ -22,20 +23,19 @@ class Player:
         for card in my_cards:
             my_ranks.append(card["rank"])
 
-        if actual_round == 0:
+        if len(community_ranks) != 0:
+            if len(community_ranks) < 5:
+                if self.check_for_pair(my_ranks, community_ranks):
+                    return int(game_state["minimum_raise"]) * 4
+                elif self.check_for_two_pair(my_ranks, community_ranks):
+                    return int(game_state["minimum_raise"]) * 8
+                else:
+                    return int(game_state["minimum_raise"])
+        else:
             if my_ranks[0] == my_ranks[1]:
-                return int(game_state["minimum_raise"]) * 1.5
-            return game_state["minimum_raise"]
-
-        if actual_round < 3:
-            if my_ranks[0] == my_ranks[1]:
-                if my_ranks[0] in community_ranks:
-                    return int(game_state["minimum_raise"]) * 3
-                return int(game_state["minimum_raise"])* 1.5
-            elif my_ranks[0] in community_ranks or my_ranks[1] in community_ranks:
-                return int(game_state["minimum_raise"]) * 1.5
+                return int(game_state["minimum_raise"]) * 4
             else:
-                return game_state["minimum_raise"]
+                return int(game_state["minimum_raise"])
 
         return 0
 
@@ -61,7 +61,7 @@ class Player:
         for my_rank in my_ranks:
             for com_rank in community_ranks:
                 if my_rank == com_rank:
-                    if pairs['first']:
+                    if pairs.get('first', 0) != 0:
                         pairs['second'] = True
                     else:
                         pairs['first'] = True
@@ -131,8 +131,4 @@ class Player:
 
     def showdown(self, game_state):
         pass
-
-
-
-
 
