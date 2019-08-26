@@ -59,7 +59,7 @@ class Player:
         for my_rank in my_ranks:
             for com_rank in community_ranks:
                 if my_rank == com_rank:
-                    if pairs['first']:
+                    if pairs.get('first', 0) != 0:
                         pairs['second'] = True
                     else:
                         pairs['first'] = True
