@@ -1,11 +1,11 @@
 class Player:
-    VERSION = "1.6"
+    VERSION = "1.9"
 
 
     def betRequest(self, game_state):
 
         players = game_state["players"]
-        actual_round = int(game_state["round"])
+        actual_round = int(game_state["bet_index"])
 
         my_cards = {}
         for player in players:
@@ -20,20 +20,19 @@ class Player:
         for card in my_cards:
             my_ranks.append(card["rank"])
 
-        if actual_round == 0:
+        if len(community_ranks) != 0:
+            if len(community_ranks) < 5:
+                if self.check_for_pair(my_ranks, community_ranks):
+                    return int(game_state["minimum_raise"]) * 4
+                elif self.check_for_two_pair(my_ranks, community_ranks):
+                    return int(game_state["minimum_raise"]) * 8
+                else:
+                    return int(game_state["minimum_raise"])
+        else:
             if my_ranks[0] == my_ranks[1]:
-                return game_state["minimum_raise"] * 1.5
-            return game_state["minimum_raise"]
-
-        if actual_round < 3:
-            if my_ranks[0] == my_ranks[1]:
-                if my_ranks[0] in community_ranks:
-                    return game_state["minimum_raise"] * 3
-                return game_state["minimum_raise"] * 1.5
-            elif my_ranks[0] in community_ranks or my_ranks[1] in community_ranks:
-                return game_state["minimum_raise"] * 1.5
+                return int(game_state["minimum_raise"]) * 4
             else:
-                return game_state["minimum_raise"]
+                return int(game_state["minimum_raise"])
 
         return 0
 
