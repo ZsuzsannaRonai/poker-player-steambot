@@ -106,6 +106,7 @@ class Player:
         my_ranks = []
         for card in my_cards:
             my_ranks.append(card["rank"])
+
         if my_ranks[0] == my_ranks[1]:
             if my_ranks[0] in community_ranks:
                 return game_state["minimum_raise"] * 3
