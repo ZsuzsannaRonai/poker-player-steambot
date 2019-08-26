@@ -1,5 +1,5 @@
 class Player:
-    VERSION = "1.11"
+    VERSION = "1.12"
 
 
     def betRequest(self, game_state):
@@ -32,7 +32,7 @@ class Player:
             if my_ranks[0] == my_ranks[1]:
                 return int(game_state["current_buy_in"]) + int(game_state["minimum_raise"]) * 4
             else:
-                return int(game_state["current_buy_in"]) - game_state["players"]["in_action"]["bet"]
+                return int(game_state["current_buy_in"]) - int(game_state["players"]["in_action"]["bet"]) + int(game_state["minimum_raise"])
         return 0
 
 
