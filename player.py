@@ -1,5 +1,5 @@
 class Player:
-    VERSION = "1.4"
+    VERSION = "1.5"
 
     test_state = {"tournament_id": "550d1d68cd7bd10003000003",
 
@@ -111,6 +111,8 @@ class Player:
         if actual_round == 0:
             if my_ranks[0] == my_ranks[1]:
                 return game_state["minimum_raise"] * 1.5
+            return game_state["minimum_raise"]
+
 
         if actual_round < 3:
             if my_ranks[0] == my_ranks[1]:
