@@ -1,6 +1,7 @@
 class Player:
-    VERSION = "1.17"
+    VERSION = "1.18"
 
+    from itertools import groupby
 
 
     def betRequest(self, game_state):
@@ -25,10 +26,16 @@ class Player:
 
         if len(community_ranks) != 0:
             if len(community_ranks) < 5:
-                if self.check_for_pair(my_ranks, community_ranks):
-                    return int(game_state["current_buy_in"]) + int(game_state["minimum_raise"]) * 2
+                if self.check_for_poker(my_cards, game_state["community_cards"]):
+                    return int(game_state["players"][my_id]["stack"])
+                elif self.check_for_full_house(my_cards, game_state["community_cards"]):
+                    return int(game_state["players"][my_id]["stack"])
+                elif self.check_for_flush(my_cards, game_state["community_cards"]):
+                    return int(game_state["players"][my_id]["stack"])
                 elif self.check_for_two_pair(my_ranks, community_ranks):
                     return int(game_state["current_buy_in"]) + int(game_state["minimum_raise"]) * 4
+                elif self.check_for_pair(my_ranks, community_ranks):
+                    return int(game_state["current_buy_in"]) + int(game_state["minimum_raise"]) * 2
                 else:
                     return int(game_state["current_buy_in"]) + int(game_state["minimum_raise"])
         else:
