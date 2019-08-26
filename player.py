@@ -1,7 +1,8 @@
 class Player:
-    VERSION = "1.8"
 
-                  "game_id": "550da1cb2d909006e90004b1",
+    from itertools import groupby
+
+    VERSION = "1.8"
 
     def betRequest(self, game_state):
 
@@ -17,10 +18,6 @@ class Player:
         for card in game_state["community_cards"]:
             community_ranks.append(card["rank"])
 
-<<<<<<<<< Temporary merge branch 1
-    def betRequest(self, game_state):
-        return 1
-=========
         my_ranks = []
         for card in my_cards:
             my_ranks.append(card["rank"])
@@ -71,6 +68,66 @@ class Player:
                 if pairs['first'] and pairs['second']:
                     return True
         return False
+
+    def all_cards(self, my_hand, community_cards, what="all"):
+        if what == "all":
+            return {**my_hand, **community_cards}
+        elif what == "rank":
+            ranks = []
+            for card in {**my_hand, **community_cards}:
+                ranks.append(card['rank'])
+            return ranks
+        elif what == "suits":
+            suits = []
+            for card in {**my_hand, **community_cards}:
+                suits.append(card['suit'])
+            return suits
+
+    def check_for_flush(self, my_hand, community_cards):
+        suits = self.all_cards(my_hand, community_cards, "suits")
+        suits.sort()  # sorting is needed for the frequency algorithm's logic
+        frequency = [len(list(group)) for key, group in self.groupby(suits)]
+        if "5" in frequency:
+            return True
+        else:
+            return False
+
+    def check_for_poker(self, my_hand, community_cards):
+        ranks = self.all_cards(my_hand, community_cards, "ranks")
+        ranks.sort()
+        frequency = [len(list(group)) for key, group in self.groupby(ranks)]
+        if "4" in frequency:
+            return True
+        else:
+            return False
+
+    def check_for_drill(self, my_hand, community_cards):
+        ranks = self.all_cards(my_hand, community_cards, "ranks")
+        ranks.sort()
+        frequency = [len(list(group)) for key, group in self.groupby(ranks)]
+        if "3" in frequency:
+            return True
+        else:
+            return False
+
+    def check_for_pair_alt(self, my_hand, community_cards):
+        ranks = self.all_cards(my_hand, community_cards, "ranks")
+        ranks.sort()
+        frequency = [len(list(group)) for key, group in self.groupby(ranks)]
+        if "2" in frequency:
+            return True
+        else:
+            return False
+
+    def check_for_full_house(self, my_hand, community_cards):
+        ranks = self.all_cards(my_hand, community_cards, "ranks")
+        ranks.sort()
+        frequency = [len(list(group)) for key, group in self.groupby(ranks)]
+        if "2" in frequency and "3" in frequency:
+            return True
+        else:
+            return False
+
 
     def showdown(self, game_state):
         pass
