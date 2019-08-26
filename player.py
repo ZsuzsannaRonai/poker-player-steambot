@@ -1,5 +1,5 @@
 class Player:
-    VERSION = "1.19"
+    VERSION = "1.20"
 
     from itertools import groupby
 
@@ -42,7 +42,7 @@ class Player:
             if my_ranks[0] == my_ranks[1]:
                 return int(game_state["current_buy_in"]) + int(game_state["minimum_raise"]) * 2
             else:
-                return int(game_state["current_buy_in"]) - int(game_state["players"][my_id]["bet"]) + int(game_state["minimum_raise"])
+                return int(game_state["current_buy_in"]) + int(game_state["minimum_raise"])
         return 0
 
 
