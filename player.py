@@ -119,6 +119,14 @@ class Player:
             frequency[rank] = frequency.get(rank, 0) + 1
         return frequency
 
+    def check_for_pair(self, my_ranks, community_ranks):
+        # return a boolean if there is a pair between hand and community cards
+        for my_rank in my_ranks:
+            for com_rank in community_ranks:
+                if my_rank == com_rank:
+                    return True
+        return False
+
     def showdown(self, game_state):
         pass
 
