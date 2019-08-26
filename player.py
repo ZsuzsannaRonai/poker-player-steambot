@@ -1,5 +1,5 @@
 class Player:
-    VERSION = "1.2"
+    VERSION = "1.3"
 
     test_state = {"tournament_id": "550d1d68cd7bd10003000003",
 
@@ -110,6 +110,8 @@ class Player:
             if my_ranks[0] in community_ranks:
                 return game_state["minimum_raise"] * 3
             return game_state["minimum_raise"]
+        elif my_ranks[0] in community_ranks or my_ranks[1] in community_ranks:
+            return game_state["minimum_raise"] * 2
         return 0
 
     def showdown(self, game_state):
