@@ -109,10 +109,10 @@ class Player:
         if my_ranks[0] == my_ranks[1]:
             if my_ranks[0] in community_ranks:
                 return game_state["minimum_raise"] * 3
-            return game_state["minimum_raise"]
+            return game_state["minimum_raise"] * 1.5
         elif my_ranks[0] in community_ranks or my_ranks[1] in community_ranks:
-            return game_state["minimum_raise"] * 2
-        return 0
+            return game_state["minimum_raise"] * 1.5
+        return game_state["minimum_raise"]
 
     def showdown(self, game_state):
         pass
