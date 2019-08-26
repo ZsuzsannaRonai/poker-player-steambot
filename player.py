@@ -1,14 +1,13 @@
 class Player:
-    VERSION = "1.6"
+    VERSION = "1.17"
 
-    from itertools import groupby
 
-    VERSION = "1.8"
 
     def betRequest(self, game_state):
 
         players = game_state["players"]
         actual_round = int(game_state["bet_index"])
+        my_id = int(game_state["in_action"])
 
         my_cards = {}
         for player in players:
@@ -22,21 +21,21 @@ class Player:
         my_ranks = []
         for card in my_cards:
             my_ranks.append(card["rank"])
+        print("Hello LeanPoker")
 
         if len(community_ranks) != 0:
             if len(community_ranks) < 5:
                 if self.check_for_pair(my_ranks, community_ranks):
-                    return int(game_state["minimum_raise"]) * 4
+                    return int(game_state["current_buy_in"]) + int(game_state["minimum_raise"]) * 2
                 elif self.check_for_two_pair(my_ranks, community_ranks):
-                    return int(game_state["minimum_raise"]) * 8
+                    return int(game_state["current_buy_in"]) + int(game_state["minimum_raise"]) * 4
                 else:
-                    return int(game_state["minimum_raise"])
+                    return int(game_state["current_buy_in"]) + int(game_state["minimum_raise"])
         else:
             if my_ranks[0] == my_ranks[1]:
-                return int(game_state["minimum_raise"]) * 4
+                return int(game_state["current_buy_in"]) + int(game_state["minimum_raise"]) * 2
             else:
-                return int(game_state["minimum_raise"])
-
+                return int(game_state["current_buy_in"]) - int(game_state["players"][my_id]["bet"]) + int(game_state["minimum_raise"])
         return 0
 
 
