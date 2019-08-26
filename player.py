@@ -1,11 +1,11 @@
 class Player:
-    VERSION = "1.5"
+    VERSION = "1.6"
 
 
     def betRequest(self, game_state):
 
         players = game_state["players"]
-        actual_round = game_state["round"]
+        actual_round = int(game_state["round"])
 
         my_cards = {}
         for player in players:
